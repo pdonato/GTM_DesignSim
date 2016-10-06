@@ -30,14 +30,16 @@ function [SimOut] = CreateSimOut(logsout)
 % Simulink will crash in the previous version of this function.
 % 
 % This version is an update that attempts to produce the same results of the
-% original function. All example files run in Matlab 2016a with this 
+% original function. All example files run in Matlab 2016a and 2015a with this 
 % function version.
 
 % Eugene Heim, NASA Langley Research Center
 % Modified, david.e.cox NASA Langley Research Center
 % Modified, pdonato@umich.edu University of Michigan
 
-if(version('-release') ~= '2016a')
+v = version('-release');
+
+if(str2num(v(1:4)) < 2016)
     temp = logsout.whos('all');% Get all field names
     index = find(strcmp('Timeseries',{temp(:).simulinkClass}));% Find signals
     for ii = 1:length(index)
